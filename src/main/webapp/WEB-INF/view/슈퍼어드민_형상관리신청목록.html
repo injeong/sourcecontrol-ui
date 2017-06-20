@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PaaS-TA 형상관리</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/cont_tab.js"></script><!--tab-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script><!--tab-->
+</head>
+
+<body>
+<div id="wrap">
+
+<!-- header :s -->
+<div id="header">
+    <div class="head_inner">
+        <h1><a title="PaaS-TA 형상관리" href="#"><img alt="PaaS-TA 형상관리" src="images/logo.png"><span>형상관리</span></a></h1>
+        <ul class="RP_title" style="float: left;display: block;position: relative;">
+            <li><a href="#"><span class="RP_num">5014</span></a></li>
+            <li><a href="#" class="wintoggle"><span class="RP_name">레파지토리 목록<b class="nav_arrow"></b></span></a>
+                <ul class="togglemenu" style="width:320px;">
+                    <li>
+                        <h3><i class="glyphicon glyphicon-plus"></i>신규 생성 (New Repository)</h3>
+                        <input id="repositoryName" name="repositoryName" type="text" placeholder="레파지토리 명(필수)">                      
+                    </li>
+                    <li>
+                       <h5>공개여부</h5>
+                        <ul>
+                        	<li><input type="radio" name="radio1" id="radio1" value="1" checked="checked">공개 (Public)</li>
+                            <li><input type="radio" name="radio1" id="radio1" value="2">비공개 (Private)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h5>유형</h5>
+                        <select id="type_option" name="type_option">
+                            <option value="0">Git</option>
+                            <option value="1">SVN</option>>
+                        </select>
+                    </li>
+                    <li class="alignC">
+                        <button type="button" class="button btn_regist">등록</button><button type="button" class="button btn_regist">취소</button>
+                    </li>
+                    <li class="toggl_message"><span class="point01 bold">‘레파지토리 명’</span> 레파지토리를 생성했습니다.</li>
+                    <li>
+                    	<h3><i class="glyphicon glyphicon-plus"></i>나의 레파지토리 (My Repository)</h3>
+                        <ul class="h6_ul">
+                            <li>레파지토리 명 1</li>
+                            <li>레파지토리 명 2</li>
+                            <li>레파지토리 명 3</li>
+                            <li>레파지토리 명 4</li>
+                            <li>레파지토리 명 5</li>
+                        </ul>
+                    </li>                  
+                </ul>            
+            </li>
+        </ul>
+        <ul class="nav_ibtn">
+            <li class="mr20"><a href="#" class="wintoggle">홍길동 님(관리자)<span class="nav_arrow"></span></a>
+                <ul class="togglemenu" style="width:125px;">
+                    <li><a href="#">내정보</a></li>
+                    <li><a href="#">사용자관리</a></li>
+                    <li><a href="#">로그아웃</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="wintoggle">사용자 추가<b class="nav_arrow"></b></a>
+                 <ul class="togglemenu" style="width:300px;left:-108px !important;">
+                    <li>
+                        <h3><i class="glyphicon glyphicon-user"></i>사용자 초대</h3>
+                        <input id="memberSearch" name="memberSearch" type="text" placeholder="포털사용자 검색">
+                        <!--<ul class="h6_ul">검색 리스트
+                            <li>test123@nia.or.kr</li>
+                            <li>test123@nia.or.kr</li>
+                        </ul>-->
+                        <select id="user_option" name="user_option" class="mt5">
+                            <option value="0">test123@nia.or.kr</option>
+                            <option value="1">test123@nia.or.kr</option>
+                            <option value="2">test123@nia.or.kr</option>
+                        </select>                       
+                    </li>
+                    <li>
+                        <h3><i class="glyphicon glyphicon-plus"></i>사용자 생성</h3>
+                        <input id="user_id" name="user_id" type="text" style="width:87%;" placeholder="아이디 (필수) – 영문소문자, 숫자, 5~12자리"><span class="glyphicon glyphicon-ok fc_blue pl5"></span>
+                        <label class="status_message">아이디는 영문, 숫자 5자리 이상으로 입력해 주시기 바랍니다.</label><!--경고메시지-->
+                        <label class="status_message">영문소문자, 숫자 5~12자로 입력해주시기 바랍니다.</label>
+                        <input id="user_name" name="user_name" type="text" style="width:87%;" placeholder="이름 (필수) -2자리 이상 입력"><span class="glyphicon glyphicon-ok fc_blue pl5"></span>
+                        <label class="status_message">이름은 2자 이상으로 입력해 주시기 바랍니다.</label><!--경고메시지-->
+                        <input id="user_email" name="user_email" type="text" style="width:87%;" placeholder="이메일 (예)paasta@nia.or.kr"><span class="glyphicon glyphicon-ok fc_blue pl5"></span>
+                        <label class="status_message">이메일 주소 형식이 올바르지 않습니다.</label><!--경고메시지-->
+                        <input id="user_pw" name="user_pw" type="password" style="width:87%;" placeholder="비밀번호 (필수) – 8자리 ~ 16자리"><span class="glyphicon glyphicon-ok fc_blue pl5"></span>
+                        <label class="status_message">비밀번호는 8~16자로 입력해 주시기 바랍니다.</label><!--경고메시지-->
+                        <input id="user_pwConfirm" name="user_pwConfirm" type="password" style="width:87%;" placeholder="비밀번호 확인 (필수)"><span class="glyphicon glyphicon-ok fc_blue pl5"></span>
+                        <label class="status_message">비밀번호가 일치하지 않습니다.</label><!--경고메시지-->                    
+                    </li>
+                    <li class="alignC">
+                        <button type="button" class="button btn_regist">생성</button><button type="button" class="button btn_regist">취소</button>
+                    </li>
+                    <li class="toggl_message"><span class="point01 bold">‘testtestdfgdsgfd’</span> 님을 사용자로 등록했습니다.</li>
+                    <li class="toggl_comment">사용자/참여자 목록 확인 및 참여자 상세 정보 수정은 <span> '사용자관리 / 참여자관리' </span> 메뉴에서 가능합니다.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--//header :e -->
+
+<!-- contaniner :s -->
+<div id="container">
+    <!-- location :s -->
+    <div class="location">
+        <ul>
+            <!--<li><a href="#" class="home">홈으로</a></li>-->
+            <li><a href="#" title="">형상관리 신청 목록</a></li>
+        </ul>
+    </div>
+    <!--//location :e -->    
+    <!-- contents :s -->
+    <div class="contents">        
+        <!-- 검색 :s -->
+        <div class="rSearch_group">
+            <div class="sel_group">
+                <form id="frm_search" method="post" action="">
+                    <div class="keyword_search fr">
+                        <input id="search_keyword" type="text" name="search_keyword" style="-ms-ime-mode: active;" value="" placeholder="서비스 이름 또는 조직명" autocomplete="on"></input>
+                        <a class="btn_search" href="#" title="검색"></a>
+                    </div>
+                </form>									
+            </div>
+        </div>
+        <!--//검색 :e -->           
+        <!-- 메인 탭 콘텐츠01 :s -->
+        <div class="main_tab00">
+            <div class="tab_content">
+                <!-- 사용자 목록(이미지없는) :s -->
+                <ul class="product_list2">
+                    <li>
+                        <dl>
+                            <dt><a href="#">서비스 이름 / 조직명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">신청자 명 / 아이디</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">아이디</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">홍길동</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">아이디</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">홍길동</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">아이디</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">홍길동</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">아이디</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">홍길동</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">아이디</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">홍길동</a></li>
+                                    <li class="stateArea"><i class="ico_app"></i>신청일시 : <a href="#">2017-06-09 14:22:45</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="btn_wrap">
+                                <button type="button" class="button tbl_in_btn_lg" title="레파지토리보기">레파지토리 보기</button> <button type="button" class="button tbl_in_btn_lg" title="사용자보기">사용자 보기</button>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+                <!--//사용자 목록(이미지없는) :e -->
+            </div>
+		</div>
+        <!--//메인 탭 콘텐츠01 :e -->
+        <!-- 메인 탭 콘텐츠02 :s -->
+        <div class="main_tab01 mTs" style="display:none;">
+            <div class="tab_content">
+                <!-- 레파지토리 목록 :s -->
+                <ul class="product_list">
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_contribute.png" alt="보기권한 이미지" border="0">
+                                        <p class="tit">보기권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_git.png" alt="GIT 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_modify.png" alt="수정권한 이미지" border="0">
+                                        <p class="tit">수정권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_own.png" alt="소유자 이미지" border="0">
+                                        <p class="tit">소유자</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_private.png" alt="비공개 이미지" border="0">
+                                        <p class="tit">비공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_git.png" alt="GIT 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_own.png" alt="소유자 이미지" border="0">
+                                        <p class="tit">소유자</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_private.png" alt="비공개 이미지" border="0">
+                                        <p class="tit">비공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_modify.png" alt="수정권한 이미지" border="0">
+                                        <p class="tit">수정권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+				<!--//레파지토리 목록 :e -->
+            </div>
+		</div>
+        <!--//메인 탭 콘텐츠02 :e -->
+        <!-- 메인 탭 콘텐츠03 :s -->
+        <div class="main_tab02 mTs" style="display:none;">
+            <div class="tab_content">
+                <!-- 레파지토리 목록 :s -->
+                <ul class="product_list">
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_git.png" alt="GIT 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_own.png" alt="소유자 이미지" border="0">
+                                        <p class="tit">소유자</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_private.png" alt="비공개 이미지" border="0">
+                                        <p class="tit">비공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_contribute.png" alt="보기권한 이미지" border="0">
+                                        <p class="tit">보기권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_git.png" alt="GIT 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_modify.png" alt="수정권한 이미지" border="0">
+                                        <p class="tit">수정권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_own.png" alt="소유자 이미지" border="0">
+                                        <p class="tit">소유자</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_private.png" alt="비공개 이미지" border="0">
+                                        <p class="tit">비공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt><a href="#">레파지토리 명</a></dt>
+                            <dd>
+                                <ul>
+                                    <li class="sbj_txt"><a href="#">레파지토리 설명 내용이 들어가는 곳입니다.</a></li>
+                                    <li class="stateArea"><i class="ico_update"></i>마지막 업데이트 : <a href="#">2017-06-09</a><span class="pr10"></span> <i class="ico_create"></i>생성일 : <a href="#">2017-06-09</a></li>
+                                </ul>
+                            </dd>
+                            <dd class="thmb_img"><img src="images/img_svn.png" alt="SVN 이미지" border="0"></dd>
+                            <dd class="icon_wrap">
+                                <ul class="ico_lst">
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_modify.png" alt="수정권한 이미지" border="0">
+                                        <p class="tit">수정권한</p></a>
+                                    </li>
+                                    <li class="ico_area">
+                                        <a href="#"><img src="images/process_ico_public.png" alt="공개 이미지" border="0">
+                                        <p class="tit">공개</p></a>
+                                    </li>
+                                </ul>            
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+				<!--//레파지토리 목록 :e -->
+            </div>
+		</div>
+        <!--//메인 탭 콘텐츠03 :e -->        
+    </div>
+    <!--//contents :e -->
+    <!--footer :s -->
+    <div class="footer wide">
+        <div class="copy">
+            Copyright © 2017 PaaS-TA. All rights reserved.
+        </div>
+    </div>
+    <!--//footer :e -->
+</div>
+<!--//contaniner :e -->
+<!-- Top 가기 :s -->
+<div class="follow" title="Scroll Back to Top">
+	<a href="#" title="top"><img src="images/a_top.gif"></a>
+</div>
+<!--//Top 가기 :e -->
+<!-- togglemenu -->
+<script type="text/javascript">
+$(".wintoggle").click(function(){
+  if( $(this).hasClass("active") ){
+  	$(this).removeClass("active");
+  	$(".togglemenu").hide();
+  }else{
+  	$(".togglemenu").hide();
+    $(".wintoggle").removeClass("active");
+  	$(this).addClass("active")
+  	$(this).next().slideDown();
+  }
+  return false;
+});
+</script>
+<!--//togglemenu -->
+<!--select 스크립트-->
+<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script>
+$.fn.selectDesign = function(){
+    var t = $(this);
+    var div = t.children("div");
+    var strong = div.children("strong");
+    var ul = t.children("ul");
+    var li = ul.children("li");
+    var door = false;
+
+    div.click(function(){
+     if(door){
+       ul.hide();
+     }else{
+       ul.show();
+     }
+      door = !door;
+    });
+
+    li.click(function(){
+        var txt = $(this).text();
+        strong.html(txt);
+        div.click();
+    });
+}
+
+$(".select1").selectDesign();
+$(".select2").selectDesign();
+$(".select3").selectDesign();
+$(".select4").selectDesign();
+</script>
+<!--//select 스크립트-->
+
+</div>
+</body>
+</html>
